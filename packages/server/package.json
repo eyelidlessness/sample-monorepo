@@ -1,7 +1,8 @@
 {
   "name": "@wixc3/sample-monorepo-publish-test-server",
   "version": "1.0.6",
-  "module": "lib/index.js",
+  "module": "src/index",
+  "main": "src/index",
   "scripts": {
     "clean": "rimraf ./dist",
     "prebuild": "yarn clean && rsync -r ./ ./dist --exclude '*config.json'",
@@ -24,8 +25,9 @@
   ],
   "license": "MIT",
   "repository": "git@github.com:wixplosives/sample-monorepo.git",
+  "private": true,
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   },
   "gitHead": "1f76b2920072edddb660438109e71228d9a78c0a"
 }
