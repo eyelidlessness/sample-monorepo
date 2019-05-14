@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+console.log(process.cwd())
+
 const changePackageJson = (pathToPackageJson) => {
     const packageJson = JSON.parse(fs.readFileSync(pathToPackageJson).toString());
     delete packageJson.scripts;
