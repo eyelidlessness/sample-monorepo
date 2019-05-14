@@ -1,8 +1,8 @@
 {
   "name": "@sample-monorepo/components",
   "version": "1.0.0",
-  "module": "./lib/index",
-  "main": "./lib/index",
+  "module": "src/index",
+  "main": "src/index",
   "scripts": {
     "clean": "rimraf ./lib",
     "prebuild": "yarn clean",
