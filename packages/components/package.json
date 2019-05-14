@@ -1,6 +1,6 @@
 {
   "name": "@sample-monorepo/components",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "module": "src/index",
   "main": "src/index",
   "scripts": {
