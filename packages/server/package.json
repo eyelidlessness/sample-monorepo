@@ -1,5 +1,5 @@
 {
-  "name": "@sample-monorepo/server",
+  "name": "@wixc3/sample-monorepo-publish-test-server",
   "version": "1.0.5",
   "module": "lib/index.js",
   "scripts": {
