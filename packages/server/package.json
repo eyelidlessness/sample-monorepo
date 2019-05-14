@@ -26,5 +26,6 @@
   "repository": "git@github.com:wixplosives/sample-monorepo.git",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "f0d976a318ff5ab88379d8792b4f224593ba9c57"
 }
