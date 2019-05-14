@@ -1,13 +1,12 @@
 {
   "name": "@sample-monorepo/components",
   "version": "1.0.0",
-  "main": "cjs/index.js",
-  "module": "esm/index.js",
-  "types": "esm/index.d.ts",
+  "module": "./lib/index",
+  "main": "./lib/index",
   "scripts": {
-    "clean": "rimraf ./cjs ./esm",
+    "clean": "rimraf ./lib",
     "prebuild": "yarn clean",
-    "build": "ts-build ./src --cjs --esm",
+    "build": "tsc -p .",
     "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts?(x)\" --watch-extensions ts,tsx --colors",
     "prepack": "yarn build"
   },

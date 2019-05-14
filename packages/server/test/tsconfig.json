@@ -1,9 +1,3 @@
 {
   "extends": "../../../tsconfig.test.json",
-  "compilerOptions": {
-    "lib": [
-      // no "dom" for server package.
-      "es2017"
-    ]
-  }
 }

@@ -10,7 +10,8 @@
     "pretest": "yarn lint",
     "test": "lerna run test --stream --parallel",
     "start": "yarn workspace @sample-monorepo/app start",
-    "prettify": "yarn prettier \"packages/**/*.{js,ts,tsx}\" --write"
+    "prettify": "yarn prettier \"packages/**/*.{js,ts,tsx}\" --write",
+    "publish": "lerna publish --contents dist"
   },
   "devDependencies": {
     "@ts-tools/build": "^0.1.11",
@@ -43,5 +44,6 @@
     "webpack-dev-server": "^3.3.1"
   },
   "license": "MIT",
-  "private": true
+  "private": true,
+  "version": "1.0.0"
 }
