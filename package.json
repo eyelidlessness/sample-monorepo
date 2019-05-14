@@ -11,7 +11,7 @@
     "test": "lerna run test --stream --parallel",
     "start": "yarn workspace @sample-monorepo/app start",
     "prettify": "yarn prettier \"packages/**/*.{js,ts,tsx}\" --write",
-    "publish": "lerna publish --contents dist"
+    "apublish": "lerna publish --contents dist"
   },
   "devDependencies": {
     "@ts-tools/build": "^0.1.11",
