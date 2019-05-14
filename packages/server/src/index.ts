@@ -12,3 +12,5 @@ app.listen(5000);
 export const Func = (test: express.Request) => {
     return test.param('test');
 };
+
+export const a = 555;
