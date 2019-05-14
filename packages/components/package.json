@@ -8,7 +8,7 @@
     "prebuild": "yarn clean && rsync -r ./ ./dist --exclude '*config.json'",
     "build": "tsc -p .",
     "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts?(x)\" --watch-extensions ts,tsx --colors",
-    "prepack": "yarn build && node ../../scripts/build.js"
+    "prepack": "yarn build && node ../../scripts/build.js "
   },
   "peerDependencies": {
     "react": ">=16"
