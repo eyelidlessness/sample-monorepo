@@ -5,6 +5,7 @@
     "target": "es2018",
   },
   "exclude": [
-    "test/*"
+    "test/*",
+    "node_modules/*"
   ]
 }
