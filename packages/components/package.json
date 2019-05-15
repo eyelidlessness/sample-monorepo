@@ -1,6 +1,6 @@
 {
   "name": "@wixc3/sample-monorepo-publish-test-components",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "module": "src/index",
   "main": "src/index",
   "scripts": {
