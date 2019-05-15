@@ -2,8 +2,12 @@ import fs from '@file-services/node';
 import { spawnSync } from 'child_process';
 
 const { findFilesSync, readFileSync, populateDirectorySync, path } = fs;
+
+const workDir = process.cwd();
 const buildFolder = 'dist';
-const ignoredFolder = new Set(['test', 'node_modules', buildFolder, 'sources']);
+const sourcesFolder = 'sources';
+const tsConfigPath = path.join(workDir, buildFolder, sourcesFolder, 'tsconfig.json');
+const ignoredFolder = new Set(['test', 'node_modules', buildFolder, sourcesFolder]);
 
 const copySourcesToFolder = (pathToDirectry: string, folderName: string) => {
     const directoryPaths = findFilesSync(pathToDirectry, {
@@ -20,29 +24,34 @@ const copySourcesToFolder = (pathToDirectry: string, folderName: string) => {
     populateDirectorySync(path.join(pathToDirectry, folderName), directoryContents);
 };
 
-const workDir = process.cwd();
-
+// creating 'dist' folder
 fs.mkdirSync(path.join(workDir, buildFolder));
 
-copySourcesToFolder(workDir, path.join(buildFolder, 'sources'));
+// copying all files in repo into 'dist/sources' folder
+copySourcesToFolder(workDir, path.join(buildFolder, sourcesFolder));
 
-const tsConfigPath = path.join(workDir, buildFolder, 'sources', 'tsconfig.json');
+// modifying tsconfig reference
 fs.writeFileSync(
     tsConfigPath,
     fs.readFileSync(tsConfigPath, 'utf8').replace('tsconfig.base.json', '../../tsconfig.base.json')
 );
+
+// building code
 spawnSync('node', [require.resolve('typescript/bin/tsc')], {
-    cwd: path.join(workDir, buildFolder, 'sources'),
+    cwd: path.join(workDir, buildFolder, sourcesFolder),
     stdio: 'inherit'
 });
 
+// copying all files in repo into 'dist' folder
 copySourcesToFolder(workDir, buildFolder);
 
+// finding all source files in 'dist' folder (that are not in sources folder)
 const tsFilesInDist = fs.findFilesSync(path.join(workDir, buildFolder), {
     filterDirectory: ({ name }) => !ignoredFolder.has(name),
     filterFile: ({ name }) => name.endsWith('.ts') && !name.endsWith('.d.ts')
 });
 
+// removing all sources that are not under the 'sources' folder
 for (const filePath of tsFilesInDist) {
     fs.removeSync(filePath);
 }
