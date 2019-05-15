@@ -5,10 +5,10 @@
   "main": "src/index",
   "scripts": {
     "clean": "rimraf ./dist",
-    "prebuild": "yarn clean && node ../../scripts/prebuild.js",
-    "build": "tsc -p .",
+    "prebuild": "yarn clean",
+    "repack": "node -r @ts-tools/node/r ../../scripts/build.ts",
     "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts?(x)\" --watch-extensions ts,tsx --colors",
-    "prepack": "yarn build"
+    "prepack": "yarn clean && yarn repack"
   },
   "peerDependencies": {
     "react": ">=16"

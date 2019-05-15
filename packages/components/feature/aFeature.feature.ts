@@ -10,7 +10,7 @@ export const person: IPersonType = {
     name: 'john'
 };
 
-export default class Person implements IPersonType {
+export class Person implements IPersonType {
     constructor(public age: number, public name: string) {}
 
     public sayHello = () => `Hello, my name is ${this.name} and my age is ${this.age}`;

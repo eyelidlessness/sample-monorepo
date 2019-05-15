@@ -1,4 +1,4 @@
-import Person from '@wixc3/sample-monorepo-publish-test-components/feature';
+import { Person } from '@wixc3/sample-monorepo-publish-test-components/feature';
 
 import { TestFunction } from '@wixc3/sample-monorepo-publish-test-components';
 
