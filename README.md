@@ -94,3 +94,6 @@ Some packages depend on sibling packages within the monorepo. For example, in th
     "@sample-monorepo/components": "<package version>"
   }
 ```
+
+To publish: 
+yarn lerna publish --contents dist
