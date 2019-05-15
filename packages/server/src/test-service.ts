@@ -1,6 +1,6 @@
-import Person from '@sample-monorepo/components/feature';
+import Person from '@wixc3/sample-monorepo-publish-test-components/feature';
 
-import { TestFunction } from '@sample-monorepo/components';
+import { TestFunction } from '@wixc3/sample-monorepo-publish-test-components';
 
 export const person = new Person(5, 'test');
 
