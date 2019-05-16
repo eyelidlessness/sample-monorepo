@@ -5,7 +5,7 @@ if (process.env.NODE_ENV === undefined) {
 import program from 'commander';
 import { build } from './build';
 
-interface BuildParams {
+interface IBuildParams {
     outDir?: string;
     src?: string;
 }
@@ -14,7 +14,7 @@ program
     .command('build [path]')
     .option('--out-dir <outDir>')
     .option('--src <src>')
-    .action(async (path: string, cmd: BuildParams) => {
+    .action(async (path: string, cmd: IBuildParams) => {
         const { outDir, src } = cmd;
         build(path, src, outDir);
     });
