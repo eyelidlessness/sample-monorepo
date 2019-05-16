@@ -6,9 +6,8 @@
   "scripts": {
     "clean": "rimraf ./npm",
     "prebuild": "yarn clean",
-    "repack": "smcli build",
     "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts?(x)\" --watch-extensions ts,tsx --colors",
-    "prepack": "yarn clean && yarn repack"
+    "prepack": "yarn clean && smcli build"
   },
   "peerDependencies": {
     "react": ">=16"
