@@ -96,4 +96,4 @@ Some packages depend on sibling packages within the monorepo. For example, in th
 ```
 
 To publish: 
-yarn lerna publish --contents dist
+yarn lerna publish --contents npm

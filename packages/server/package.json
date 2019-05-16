@@ -1,17 +1,17 @@
 {
   "name": "@wixc3/sample-monorepo-publish-test-server",
   "version": "1.0.14",
-  "module": "src/index",
-  "main": "src/index",
+  "module": "lib/index",
+  "main": "lib/index",
   "scripts": {
-    "clean": "rimraf ./dist",
+    "clean": "rimraf ./npm",
     "prebuild": "yarn clean",
     "build": "tsc",
     "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts?(x)\" --watch-extensions ts,tsx --colors",
     "prestart": "yarn workspace @sample-monorepo/app build:umd",
     "start": "nodemon -r @ts-tools/node/r ./src/index.tsx",
     "prepack": "yarn clean && yarn repack",
-    "repack": "node -r @ts-tools/node/r ../../scripts/build.ts"
+    "repack": "smcli build"
   },
   "peerDependencies": {
     "react": ">=16",

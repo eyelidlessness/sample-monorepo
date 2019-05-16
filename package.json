@@ -12,6 +12,9 @@
     "start": "yarn workspace @sample-monorepo/app start",
     "prettify": "yarn prettier \"packages/**/*.{js,ts,tsx}\" --write"
   },
+  "bin": {
+    "smcli": "./cli.js"
+  },
   "devDependencies": {
     "@file-services/node": "^1.0.5",
     "@ts-tools/build": "^0.1.11",
@@ -45,5 +48,8 @@
   },
   "license": "MIT",
   "private": true,
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "dependencies": {
+    "commander": "^2.20.0"
+  }
 }

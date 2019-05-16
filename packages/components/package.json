@@ -1,12 +1,12 @@
 {
   "name": "@wixc3/sample-monorepo-publish-test-components",
   "version": "1.0.17",
-  "module": "src/index",
-  "main": "src/index",
+  "module": "lib/index",
+  "main": "lib/index",
   "scripts": {
-    "clean": "rimraf ./dist",
+    "clean": "rimraf ./npm",
     "prebuild": "yarn clean",
-    "repack": "node -r @ts-tools/node/r ../../scripts/build.ts",
+    "repack": "smcli build",    
     "test": "mocha -r @ts-tools/node/r \"test/**/*.spec.ts?(x)\" --watch-extensions ts,tsx --colors",
     "prepack": "yarn clean && yarn repack"
   },

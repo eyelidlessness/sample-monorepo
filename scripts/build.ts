@@ -3,15 +3,15 @@ import { spawnSync } from 'child_process';
 
 const { findFilesSync, readFileSync, populateDirectorySync, path } = fs;
 
-const workDir = process.cwd();
-const buildFolder = 'dist';
-const sourcesFolder = 'sources';
-const tsConfigPath = path.join(workDir, buildFolder, sourcesFolder, 'tsconfig.json');
-const ignoredFolder = new Set(['test', 'node_modules', buildFolder, sourcesFolder]);
-
-const copySourcesToFolder = (pathToDirectry: string, folderName: string) => {
+const copySourcesToFolder = (
+    pathToDirectry: string,
+    folderName: string,
+    ignoredFolder: Set<string>,
+    ignoredFiles?: string[]
+) => {
     const directoryPaths = findFilesSync(pathToDirectry, {
-        filterDirectory: ({ name }) => !ignoredFolder.has(name)
+        filterDirectory: ({ name }) => !ignoredFolder.has(name),
+        filterFile: ({ name }) => !ignoredFiles || ignoredFiles.filter(endsWith => name.endsWith(endsWith)).length === 0
     });
     const directoryContents = directoryPaths.reduce(
         (contents, filePath) => {
@@ -24,34 +24,38 @@ const copySourcesToFolder = (pathToDirectry: string, folderName: string) => {
     populateDirectorySync(path.join(pathToDirectry, folderName), directoryContents);
 };
 
-// creating 'dist' folder
-fs.mkdirSync(path.join(workDir, buildFolder));
+export function build(workDir: string = process.cwd(), srcDir: string = 'src', outDir: string = 'npm') {
+    const tsConfigPath = path.join(workDir, outDir, srcDir, 'tsconfig.json');
+    const ignoredFolder = new Set(['test', 'node_modules', outDir, srcDir]);
 
-// copying all files in repo into 'dist/sources' folder
-copySourcesToFolder(workDir, path.join(buildFolder, sourcesFolder));
+    // creating 'npm' folder
+    fs.ensureDirectorySync(path.join(workDir, outDir));
 
-// modifying tsconfig reference
-fs.writeFileSync(
-    tsConfigPath,
-    fs.readFileSync(tsConfigPath, 'utf8').replace('tsconfig.base.json', '../../tsconfig.base.json')
-);
+    // copying all files in repo into 'npm/src' folder
+    copySourcesToFolder(workDir, path.join(outDir, srcDir), ignoredFolder);
 
-// building code
-spawnSync('node', [require.resolve('typescript/bin/tsc')], {
-    cwd: path.join(workDir, buildFolder, sourcesFolder),
-    stdio: 'inherit'
-});
+    // modifying tsconfig reference
+    fs.writeFileSync(
+        tsConfigPath,
+        fs.readFileSync(tsConfigPath, 'utf8').replace('tsconfig.base.json', '../../tsconfig.base.json')
+    );
 
-// copying all files in repo into 'dist' folder
-copySourcesToFolder(workDir, buildFolder);
+    // building code
+    spawnSync('node', [require.resolve('typescript/bin/tsc'), '--outDir', '..'], {
+        cwd: path.join(workDir, outDir, srcDir),
+        stdio: 'inherit'
+    });
 
-// finding all source files in 'dist' folder (that are not in sources folder)
-const tsFilesInDist = fs.findFilesSync(path.join(workDir, buildFolder), {
-    filterDirectory: ({ name }) => !ignoredFolder.has(name),
-    filterFile: ({ name }) => name.endsWith('.ts') && !name.endsWith('.d.ts')
-});
+    // copying all files in repo into 'npm' folder
+    copySourcesToFolder(workDir, outDir, ignoredFolder, ['.ts']);
 
-// removing all sources that are not under the 'sources' folder
-for (const filePath of tsFilesInDist) {
-    fs.removeSync(filePath);
+    // finding all tsconfig files in 'npm' folder
+    const tsConfigFilesInNpm = fs.findFilesSync(path.join(workDir, outDir), {
+        filterFile: ({ name }) => name.indexOf('tsconfig') !== -1
+    });
+
+    // removing all tsconfigs
+    for (const filePath of tsConfigFilesInNpm) {
+        fs.removeSync(filePath);
+    }
 }
